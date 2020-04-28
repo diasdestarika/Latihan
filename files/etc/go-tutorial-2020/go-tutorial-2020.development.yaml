@@ -1,0 +1,15 @@
+server:
+    port: ":8888"
+database:
+    master: "PharmanetBois:d3v3l0p8015@tcp(13.250.197.171:3306)/test?parseTime=true"
+    master: ""
+firebase:
+    ProjectID: "fbtest-4c1d3"
+kafka:
+    username: ""
+    password: ""
+    brokers:
+        - "35.247.190.1:9092" 
+    subscriptions:
+        - "New_User"
+        - "New_ManyUser"

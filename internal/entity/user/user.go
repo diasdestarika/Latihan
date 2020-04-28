@@ -6,12 +6,12 @@ import "time"
 
 // User object model
 type User struct {
-	ID       int    `db:"id" json:"user_id"`
-	NIP      string `db:"nip" json:"nip"`
-	Nama     string `db:"nama_lengkap" json:"nama_lengkap"`
+	ID       int       `db:"id" json:"user_id"`
+	NIP      string    `db:"nip" json:"nip"`
+	Nama     string    `db:"nama_lengkap" json:"nama_lengkap"`
 	TglLahir time.Time `db:"tanggal_lahir" json:"tgl_lahir"`
-	Jabatan  string `db:"jabatan" json:"jabatan"`
-	Email    string `db:"email" json:"email"`
+	Jabatan  string    `db:"jabatan" json:"jabatan"`
+	Email    string    `db:"email" json:"email"`
 }
 
 //DataResp ...
@@ -24,4 +24,7 @@ type DataResp struct {
 type Respons struct {
 	ID  int    `db:"id" json:"user_id"`
 	NIP string `db:"nip" json:"nip"`
+}
+type Me struct {
+	ID int `db:"id" json:"user_id"`
 }

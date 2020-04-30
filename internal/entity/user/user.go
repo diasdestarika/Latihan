@@ -14,6 +14,12 @@ type User struct {
 	Email    string    `db:"email" json:"email"`
 }
 
+type UserUpdate struct {
+	ID       int    `db:"id" json:"user_id"`
+	NIP      string `db:"nip" json:"nip"`
+	TglLahir string `db:"tanggal_lahir" json:"tgl_lahir"`
+}
+
 //DataResp ...
 type DataResp struct {
 	Data     []User      `json:"data"`
@@ -24,7 +30,4 @@ type DataResp struct {
 type Respons struct {
 	ID  int    `db:"id" json:"user_id"`
 	NIP string `db:"nip" json:"nip"`
-}
-type Me struct {
-	ID int `db:"id" json:"user_id"`
 }

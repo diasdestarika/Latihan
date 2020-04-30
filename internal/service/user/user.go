@@ -23,6 +23,7 @@ type UserData interface {
 	UpdateuserFirebase(ctx context.Context, NIP string, user userEntity.User) error
 	UpdateuserFire(ctx context.Context, user userEntity.User) (userEntity.User, error)
 	UpdateuserFireRespon(ctx context.Context, user userEntity.User, respon userEntity.Respons) (userEntity.Respons, error)
+	UpdateTglLahir (ctx context.Context, structUpdate []userEntity.UserUpdate, respon userEntity.Respons) (userEntity.Respons, error)
 	DeleteUserFromFirebase(ctx context.Context, NIP string) error
 	NewNIPFirebase(ctx context.Context) (int, error)
 	GetUserAPI(ctx context.Context, header http.Header) ([]userEntity.User, error)
@@ -155,7 +156,17 @@ func (s Service) UpdateuserFireRespon(ctx context.Context, user userEntity.User,
 	respon, err := s.userData.UpdateuserFireRespon(ctx,user,respon)
 
 	return respon, err
+	
 }
+
+func (s Service) UpdateTglLahir(ctx context.Context, structUpdate []userEntity.UserUpdate, respon userEntity.Respons) (userEntity.Respons, error) {
+
+	respon, err := s.userData.UpdateTglLahir(ctx,structUpdate,respon)
+
+	return respon, err
+	
+}
+
 
 //DeleteUserFromFirebase ...
 func (s Service) DeleteUserFromFirebase(ctx context.Context, NIP string) error {

@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -307,7 +306,6 @@ func (d Data) UpdateuserFire(ctx context.Context, user userEntity.User) (userEnt
 
 func (d Data) UpdateuserFireRespon(ctx context.Context, user userEntity.User, respon userEntity.Respons) (userEntity.Respons, error) {
 	//var users userEntity.User
-
 	NIP := user.NIP
 	iter, err := d.fb.Collection("user_test").Doc(NIP).Get(ctx)
 
@@ -317,23 +315,35 @@ func (d Data) UpdateuserFireRespon(ctx context.Context, user userEntity.User, re
 		return respon, errors.Wrap(err, "ga ada")
 	}
 
-	tgl := user.TglLahir.Format(time.RFC3339)
-
-	fmt.Println(tgl)
-	
-	layout := "01-02-2006"
-
-	parse, _ := time.Parse(layout, tgl)
-
-	// user.NIP = NIP
-	// _, err = d.fb.Collection("user_test").Doc(NIP).Set(ctx, user)
 	_, err = d.fb.Collection("user_test").Doc(NIP).Update(ctx, []firestore.Update{
-		{Path: "TglLahir", Value: parse},
+		{Path: "TglLahir", Value: user.TglLahir},
 	})
 
 	//fmt.Println(user.TglLahir)
 	respon.ID = user.ID
 	respon.NIP = user.NIP
+
+	return respon, err
+}
+
+func (d Data) UpdateTglLahir(ctx context.Context, structUpdate []userEntity.UserUpdate, respon userEntity.Respons) (userEntity.Respons, error) {
+	//var user userEntity.User
+	var err error
+	layout := "2006-01-02"
+	for i := 0; i < len(structUpdate); i++ {
+		date, _ := time.Parse(layout, structUpdate[i].TglLahir)
+
+		_, err = d.fb.Collection("user_test").Doc(structUpdate[i].NIP).Update(ctx, []firestore.Update{
+			{Path: "TglLahir", Value: date},
+		})
+
+		respon.ID = structUpdate[i].ID
+		respon.NIP = structUpdate[i].NIP
+	}
+
+	//structUpdate.TglLahir = user.TglLahir.Format(layout)
+
+	//fmt.Println(user.TglLahir)
 
 	return respon, err
 }

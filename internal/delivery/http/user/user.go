@@ -27,6 +27,7 @@ type IUserSvc interface {
 	UpdateuserFirebase(ctx context.Context, NIP string, user userEntity.User) error
 	UpdateuserFire(ctx context.Context, user userEntity.User) (userEntity.User, error)
 	UpdateuserFireRespon(ctx context.Context, user userEntity.User, respon userEntity.Respons) (userEntity.Respons, error)
+	UpdateTglLahir(ctx context.Context, structUpdate []userEntity.UserUpdate, respon userEntity.Respons) (userEntity.Respons, error)
 	DeleteUserFromFirebase(ctx context.Context, NIP string) error
 	GetUserAPI(ctx context.Context, header http.Header) ([]userEntity.User, error)
 	PublishUser(user userEntity.User) error
@@ -56,6 +57,7 @@ func (h *Handler) UserHandler(w http.ResponseWriter, r *http.Request) {
 		err      error
 		errRes   response.Error
 		user     userEntity.User
+		update   []userEntity.UserUpdate
 		page     int
 		size     int
 		respon   userEntity.Respons
@@ -142,6 +144,9 @@ func (h *Handler) UserHandler(w http.ResponseWriter, r *http.Request) {
 		case "fireRespon":
 			json.Unmarshal(body, &user)
 			result, err = h.userSvc.UpdateuserFireRespon(context.Background(), user, respon)
+		case "updateTgl":
+			json.Unmarshal(body, &update)
+			result, err = h.userSvc.UpdateTglLahir(context.Background(), update, respon )
 
 		}
 	case http.MethodDelete:
